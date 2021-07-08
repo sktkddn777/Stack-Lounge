@@ -1,0 +1,100 @@
+Java
+JavaScript
+Python
+MySQL
+Node.js
+ReactJS
+Git
+CSS
+HTML
+Spring
+Docker
+Vue.js
+TypeScript
+Android
+Kotlin
+REST API
+iOS
+React Native
+Swift
+PHP
+Django
+C++
+ES6
+Linux
+jQuery
+Redis
+C#
+AWS EC2
+SQL
+Spring Boot
+Amazon Web Services(AWS)
+Webpack
+Objective-C
+PostgreSQL
+Tensorflow
+C
+Kubernetes
+MariaDB
+MongoDB
+GraphQL
+AWS S3
+Redux.js
+Elasticsearch
+PyTorch
+HTML5
+Go
+RxJava
+MSSQL(Microsoft SQL Server)
+Firebase
+MVVM(Model-View-ViewModel)
+NoSQL
+GitHub
+Ruby on Rails
+GCP(Google Cloud Platform)
+AWS RDS
+Oracle
+AngularJS
+Next.js
+Laravel
+.NET
+Deep Learning
+NLP
+Machine Learning
+AWS ECS
+AWS Lambda
+Apache Kafka
+JPA(Java Persistent API)
+Gradle
+RxSwift
+ExpressJS
+Apache Hadoop
+Apache Spark
+Azure
+JSP
+Unity
+JIRA
+Jenkins
+Flask
+Angular
+React Hooks API
+CSS3
+RabbitMQ
+flutter
+AWS DynamoDB
+AWS Cloud9
+DRF(Django REST framework)
+Terraform
+R
+Nginx
+Shell Script
+Apache
+Pandas
+Microservice Architecture
+Nuxt.js
+OOP
+MVC
+AWS CloudFront
+Retrofit
+Babel
+Windows Server
