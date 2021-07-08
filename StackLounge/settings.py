@@ -75,20 +75,22 @@ WSGI_APPLICATION = 'StackLounge.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
-        'ENGINE': 'djongo',
-        'ENFORCE_SCHEMA': True,
-        'NAME': 'django_mongodb_docker',
-        'HOST': 'mongodb',
-        'PORT': 27017,
-        'USER': 'root',
-        'PASSWORD': 'mongoadmin',
-        'AUTH_SOURCE': 'admin',
-        'AUTH_MECHANISM': 'SCRAM-SHA-1',
+        'default': {  
+    'ENGINE':   'djongo',
+    'NAME':     'mongodb',
+    'ENFORCE_SCHEMA': False, # keeps mongo migration-free
+    'CLIENT': {
+        'host': 'mongodb://mongodb:27017',
+        'username': 'root',
+        'password': 'example',
+        'authSource': 'admin',
+        'authMechanism': 'SCRAM-SHA-1',
+
     }
+    
+  },
 }
+
 
 
 # Password validation
