@@ -4,7 +4,7 @@ import json
 from selenium import webdriver
 from multiprocessing import Process, Semaphore
     
-
+import time
 
 def crawl_urls():
     base_url = "https://programmers.co.kr"
@@ -49,40 +49,32 @@ def crawl_urls():
 
 
 
-def get_stack_data(id, links, sem):
-    global frequency_dict
-
+def get_stack_data(id, links, sem, frequency_dict):
+    print("Start")
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
     driver = webdriver.Chrome(options=options)
 
     code_data = []
-
+    dataL = []
     for link in links:
-        # driver.implicitly_wait(5)
         if(link[:5] == "https"):
             driver.get(link)
 
         try:
             use_data = driver.find_element_by_class_name("heavy-use")
-            code_data.append(use_data.find_elements_by_tag_name("code"))
+            code_data = use_data.find_elements_by_tag_name("code")
+            sem.acquire()
+            for data in code_data:
+                frequency_dict[data.text] = 1 if data.text not in frequency_dict else frequency_dict[data.text] + 1
+            sem.release()
+
         except:
-       
             continue
-# use single thread when global variable occurs 
-# another use multiprocessing
-    
-    
-    sem.acquire()
-    for data in code_data:
-        for d in data:
-            print(d.text)
-            frequency_dict[d.text] = 1 if data.text not in frequency_dict else frequency_dict[data.text] + 1
-    
+        
     sorted_frequency_dict = sorted(frequency_dict.items(), key=lambda x: x[1], reverse=True)
     tech_stack = sorted_frequency_dict[:100]
 
-    sem.release()
 
     make_tech_txt(tech_stack)
 
@@ -113,19 +105,18 @@ def txt_to_lst():
 
 if __name__ == '__main__': 
     frequency_dict = {}
-    #crawl_urls()
+    crawl_urls()
     urls_lst = txt_to_lst()
-
     sem = Semaphore()
     
-    th1 = Process(target=get_stack_data, args=(1, urls_lst, sem))
-    th2 = Process(target=get_stack_data, args=(2, urls_lst, sem))
+    th1 = Process(target=get_stack_data, args=(1, urls_lst, sem, frequency_dict))
+    #th2 = Process(target=get_stack_data, args=(2, urls_lst, sem, frequency_dict))
 
     th1.start()
-    th2.start()
+   # th2.start()
 
     th1.join()
-    th2.join()
+    #th2.join()
 
 
     

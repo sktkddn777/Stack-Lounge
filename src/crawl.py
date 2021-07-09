@@ -28,9 +28,11 @@ def txt_to_dic():
     return stack_dict
 
 
-def get_cop_data(id, links, sem):
+def get_cop_data(id, links, sem, stack_dict):
     driver = setting_driver()
+    characters = "/()?%,"
     korean = re.compile('[\u3131-\u3163\uac00-\ud7a3]+')
+
     for link in links:
         # driver.implicitly_wait(5)
         driver.get(link)
@@ -38,27 +40,33 @@ def get_cop_data(id, links, sem):
         try:
             cop_name = driver.find_element_by_class_name("sub-title").text
             code_data = driver.find_element_by_class_name("heavy-use").find_elements_by_tag_name("code")
-            requirement = driver.find_element_by_id("job-position-requirement-view-section")
-            preference = driver.find_element_by_id("job-position-preferredExperience-view-section")
+            requirement = driver.find_element_by_id("job-position-requirement-view-section").text
+            preference = driver.find_element_by_id("job-position-preferredExperience-view-section").text
         except:
             continue
         
         sem.acquire()
-        list_code = code_data.split()
         
-        list_requirement = re.sub(korean, '', requirement.text).split()
-        list_preference = re.sub(korean, '', preference.text).split()
+        requirement = ''.join(x for x in requirement if x not in characters)
+        preference = ''.join(x for x in preference if x not in characters)
+
+        list_requirement = re.sub(korean, '', requirement).split()
+        list_preference = re.sub(korean, '', preference).split()
+        list_data = list_requirement + list_preference
+        for data in code_data:
+            list_data.append(data.text)
         
-        list_data = list_requirement + list_preference + list_code
+        list_data = list(set(list_data))
+
         for data in list_data:
             if data in stack_dict:
                 if cop_name not in stack_dict[data] or cop_name != "":
                     stack_dict[data].append(cop_name)
         sem.release()
-    return True
+    makeJson(stack_dict)
 
 
-def makeJson():
+def makeJson(stack_dict):
     with open('cop_by_tech.json','w',encoding="utf-8") as make_file:
         json.dump(stack_dict, make_file,  ensure_ascii=False, indent='\t')
 
@@ -70,7 +78,7 @@ if __name__ == '__main__':
 
     sem = Semaphore()
 
-    th1 = Process(target=get_cop_data, args=(1, urls_lst, sem))
+    th1 = Process(target=get_cop_data, args=(1, urls_lst, sem, stack_dict))
    # th2 = Process(target=get_cop_data, args=(2, urls_lst, sem))
 
     th1.start()
@@ -78,6 +86,4 @@ if __name__ == '__main__':
     
     th1.join()
    # th2.join()
-
-    makeJson()
 
