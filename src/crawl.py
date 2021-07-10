@@ -3,7 +3,6 @@ import json
 import re
 from selenium import webdriver
 from bs4 import BeautifulSoup
-from name1 import txt_to_lst
 from multiprocessing import Process, Semaphore
 
 
@@ -117,18 +116,22 @@ class Crawl:
             json.dump(self.cop_dict, make_file, ensure_ascii=False, indent='\t')
 
 
+def start_crawl(site_name, url, detailed_url):
+    site_name = Crawl(url, detailed_url)
+    site_name.crawl_urls()
+    site_name.make_tech_stack()
+    site_name.txt_to_dic()
+    thread = Process(target=site_name.get_cop_data())
+    thread.start()
+    thread.join()
+
+
 if __name__ == '__main__': 
 
     url = ["https://programmers.co.kr"]
     detailed_url = ["https://programmers.co.kr/job?page={}&utm_campaign=job_hiring&utm_medium=cpc&utm_source=google"]
     
-    programmers = Crawl(url[0], detailed_url[0]) # 사이트별 홈페이지와 데이터를 따오기 위한 url을 삽입
-    programmers.crawl_urls() # url_list를 url링크들로 채워준다.
-    programmers.make_tech_stack()
-    programmers.txt_to_dic()
-    th1 = Process(target=programmers.get_cop_data())
-    th1.start()
-    th1.join()
+    start_crawl(programmers, url[0], detailed_url[0])
 
 
 
