@@ -21,7 +21,7 @@ ROBOTSTXT_OBEY = False
 
 # Log Level 
 # More information : https://doc.scrapy.org/en/latest/topics/logging.html#topics-logging
-LOG_LEVEL = 'INFO'
+# LOG_LEVEL = 'INFO'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -67,13 +67,13 @@ LOG_LEVEL = 'INFO'
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'stackspider.pipelines.StackspiderPipeline': 300,
-#    'stackspider.pipelines.MongoDBPipeline': 300,
+   # 'stackspider.pipelines.StackspiderPipeline': 300,
+   'stackspider.pipelines.MongoDBPipeline': 300,
 }
-MONGODB_SERVER = "mongodb://mongodb"
+MONGODB_SERVER = "mongodb://127.0.0.1"
 MONGODB_PORT = 27017
-MONGODB_DB = "django_mongodb_docker"
-MONGODB_COLLECTION = ""
+MONGODB_DB = "stackdb"
+MONGODB_COLLECTION = "programmers"
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
