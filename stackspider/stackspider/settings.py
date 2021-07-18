@@ -73,7 +73,7 @@ ITEM_PIPELINES = {
 MONGODB_SERVER = "mongodb://127.0.0.1"
 MONGODB_PORT = 27017
 MONGODB_DB = "stackdb"
-MONGODB_COLLECTION = "programmers"
+MONGODB_COLLECTION = ["programmers", "indeed", "wanted"] 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True

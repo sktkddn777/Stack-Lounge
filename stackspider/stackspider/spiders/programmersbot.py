@@ -3,7 +3,6 @@ from stackspider.items import JobCardItem, CompanyItem
 from urllib.parse import urljoin, urlparse
 import re
 import json
-from requests import get
 
 class ProgrammersbotSpider(Spider):
     '''
@@ -73,9 +72,10 @@ class ProgrammersbotSpider(Spider):
         card_content['technicalTags'] = job_position_content_json['technicalTags'],
         card_content['teamTechnicalTags'] = job_position_content_json['teamTechnicalTags'],
         
-
+        yield card_content
         url = urljoin(self.start_urls[0], f"companies/{job_position_content_json['companyId']}")
         yield Request(url, callback=self.parseCompanyContent)
+        
     
 
     async def parseCompanyContent(self, response):
@@ -91,7 +91,6 @@ class ProgrammersbotSpider(Spider):
             cb_kwargs=dict(stack_information=code)
         )
 
-        # self.logger.info("FORM API COMPANY: %s"% url)
         yield request
 
     async def parseCompanyApiContent(self, response, stack_information):
