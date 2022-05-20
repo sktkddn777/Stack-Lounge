@@ -1,4 +1,4 @@
-# Scrapy settings for stackspider project
+# Scrapy settings for myproject project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,21 +7,17 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'stackspider'
+BOT_NAME = 'myproject'
 
-SPIDER_MODULES = ['stackspider.spiders']
-NEWSPIDER_MODULE = 'stackspider.spiders'
+SPIDER_MODULES = ['myproject.spiders']
+NEWSPIDER_MODULE = 'myproject.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'stackspider (+http://www.yourdomain.com)'
+#USER_AGENT = 'myproject (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = False
-
-# Log Level 
-# More information : https://doc.scrapy.org/en/latest/topics/logging.html#topics-logging
-# LOG_LEVEL = 'INFO'
+ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -49,13 +45,13 @@ ROBOTSTXT_OBEY = False
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'stackspider.middlewares.StackspiderSpiderMiddleware': 543,
+#    'myproject.middlewares.MyprojectSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'stackspider.middlewares.StackspiderDownloaderMiddleware': 543,
+#    'myproject.middlewares.MyprojectDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -67,13 +63,9 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   # 'stackspider.pipelines.StackspiderPipeline': 300,
-   'stackspider.pipelines.MongoDBPipeline': 300,
+   'myproject.pipelines.JumpitPipeline': 300,
 }
-MONGODB_SERVER = "mongodb://127.0.0.1"
-MONGODB_PORT = 27017
-MONGODB_DB = "stackdb"
-MONGODB_COLLECTION = ["programmers", "indeed", "wanted"] 
+
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True

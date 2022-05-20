@@ -2,6 +2,7 @@ version: "3.9"
 volumes:
   mongodb-data:
     name: mongodb-data
+
 networks:
   mongodb_network:
     name: mongodb_network
@@ -20,11 +21,7 @@ services:
       - mongodb_network
     ports:
       - 27017:27017
-    # healthcheck:
-    #   test: echo 'db.runCommand("ping").ok' | mongo 10.10.10.60:27017/test --quiet
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
+
 
   mongo-express:
     image: mongo-express
@@ -47,12 +44,15 @@ services:
       - mongodb_network 
     ports:
       - 8081:8081
-  # healthcheck:
-  #   test:  wget --quiet --tries=3 --spider http://admin:admin123@10.10.10.60:8081 || exit 1
-  #   interval: 30s
-  #   timeout: 10s
-  #   retries: 3
-  #   restart: unless-stopped
+
+  spider_jumpit:
+    image: app
+    build: .
+    command: bash -c "cd myproject && scrapy crawl jumpitbot"
+    volumes:
+      - .:/backend
+    depends_on:
+      - mongodb
  
   web:
     image: app
